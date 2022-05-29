@@ -17,12 +17,12 @@ public class OperationController {
 
     private final OperationService service;
 
-    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void importFromFile(@RequestParam("file") MultipartFile file) {
         service.importFromFile(file);
     }
 
-    @GetMapping("/export")
+    @GetMapping
     public HttpEntity<byte[]> exportToFile(OperationQuery query) {
         HttpHeaders headers = new HttpHeaders();
         FileView fileView = service.exportToFile(query);
