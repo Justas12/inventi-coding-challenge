@@ -9,7 +9,7 @@ $ ./mvnw spring-boot:run
 ```
 ### API
 <pre>
-- POST /api/operations
-- GET /api/operations
-- GET /api/balances
+- POST /api/operations (form data payload with file attribute)
+- GET /api/operations?from=to=
+- GET /api/balances?accountNumber=from=to=
 </pre>
