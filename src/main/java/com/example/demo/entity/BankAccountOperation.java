@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "bank_account_operations")
 @Setter
+@Getter
 public class BankAccountOperation {
 
     @Id
