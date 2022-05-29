@@ -1,10 +1,13 @@
 package com.example.demo.entity;
 
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "bank_accounts")
+@Setter
 public class BankAccount {
 
     @Id

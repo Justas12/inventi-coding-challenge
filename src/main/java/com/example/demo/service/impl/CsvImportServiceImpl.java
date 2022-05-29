@@ -1,6 +1,10 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.BankAccount;
+import com.example.demo.entity.BankAccountOperation;
 import com.example.demo.model.CsvRecordBankStatement;
+import com.example.demo.repository.BankAccountOperationRepository;
+import com.example.demo.repository.BankAccountRepository;
 import com.example.demo.service.ImportService;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
@@ -17,11 +21,14 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Iterator;
 
 @RequiredArgsConstructor
 @Service
 public class CsvImportServiceImpl implements ImportService {
+
+    private final BankAccountRepository bankAccountRepository;
+    private final BankAccountOperationRepository bankAccountOperationRepository;
 
     @Override
     public void importFile(MultipartFile file) {
@@ -33,11 +40,40 @@ public class CsvImportServiceImpl implements ImportService {
                 .withIgnoreLeadingWhiteSpace(true)
                 .withIgnoreEmptyLine(true)
                 .build();
-            List<CsvRecordBankStatement> results = csvReader.parse();
+            Iterator<CsvRecordBankStatement> iterator = csvReader.stream().iterator();
+            while (iterator.hasNext()) {
+                CsvRecordBankStatement csvRecordBankStatement = iterator.next();
+                BankAccount bankAccount = bankAccountRepository.findByNumber(csvRecordBankStatement.getAccountNumber())
+                    .orElseGet(() -> {
+                        BankAccount bankAccount1 = buildBankAccount(csvRecordBankStatement);
+                        bankAccountRepository.save(bankAccount1);
+                        return bankAccount1;
+                    });
+                BankAccountOperation bankAccountOperation = buildBankAccountOperation(csvRecordBankStatement, bankAccount);
+                bankAccountOperationRepository.save(bankAccountOperation);
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private BankAccountOperation buildBankAccountOperation(CsvRecordBankStatement csvRecordBankStatement,
+                                                           BankAccount bankAccount) {
+        BankAccountOperation bankAccountOperation = new BankAccountOperation();
+        bankAccountOperation.setAccount(bankAccount);
+        bankAccountOperation.setAmount(csvRecordBankStatement.getAmount());
+        bankAccountOperation.setComment(csvRecordBankStatement.getComment());
+        bankAccountOperation.setCurrency(csvRecordBankStatement.getCurrency());
+        bankAccountOperation.setDateTime(csvRecordBankStatement.getOperationDateTime());
+        return bankAccountOperation;
+    }
+
+    private BankAccount buildBankAccount(CsvRecordBankStatement csvRecordBankStatement) {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setBeneficiary(csvRecordBankStatement.getBeneficiary());
+        bankAccount.setNumber(csvRecordBankStatement.getAccountNumber());
+        return bankAccount;
     }
 
     private CSVReader buildCsvReader(Reader reader) {
