@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Operation;
+import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.model.query.BalanceQuery;
 import com.example.demo.model.view.BalanceView;
 import com.example.demo.repository.AccountRepository;
@@ -9,7 +10,6 @@ import com.example.demo.service.BalanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 
