@@ -9,7 +9,7 @@ $ ./mvnw spring-boot:run
 ```
 ### API
 <pre>
-- POST /api/operations/import
-- GET /api/operations/export
+- POST /api/operations
+- GET /api/operations
 - GET /api/balances
 </pre>
