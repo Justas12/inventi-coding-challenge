@@ -7,10 +7,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "bank_accounts")
+@Table(name = "accounts")
 @Setter
 @Getter
-public class BankAccount {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +23,6 @@ public class BankAccount {
     private String beneficiary;
 
     @OneToMany(mappedBy = "account")
-    private List<BankAccountOperation> operations;
+    private List<Operation> operations;
 
 }

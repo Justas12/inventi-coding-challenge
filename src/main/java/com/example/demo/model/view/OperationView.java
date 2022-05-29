@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Value
 @Builder
-public class BankOperationView {
+public class OperationView {
 
     String accountNumber;
 

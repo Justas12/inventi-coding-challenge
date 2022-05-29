@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Value
 @Builder
-public class BankAccountOperationsQuery {
+public class OperationQuery {
 
     LocalDateTime from;
     LocalDateTime to;

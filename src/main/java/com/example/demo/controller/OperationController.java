@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.query.BankAccountOperationsQuery;
+import com.example.demo.model.query.OperationQuery;
 import com.example.demo.model.view.FileView;
-import com.example.demo.service.BankAccountOperationService;
+import com.example.demo.service.OperationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/operations")
-public class BankAccountOperationsController {
+public class OperationController {
 
-    private final BankAccountOperationService service;
+    private final OperationService service;
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void importFromFile(@RequestParam("file") MultipartFile file) {
@@ -23,7 +23,7 @@ public class BankAccountOperationsController {
     }
 
     @GetMapping("/export")
-    public HttpEntity<byte[]> exportToFile(BankAccountOperationsQuery query) {
+    public HttpEntity<byte[]> exportToFile(OperationQuery query) {
         HttpHeaders headers = new HttpHeaders();
         FileView fileView = service.exportToFile(query);
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);

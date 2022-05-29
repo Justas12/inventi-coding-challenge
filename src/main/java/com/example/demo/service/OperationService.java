@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.model.query.BankAccountOperationsQuery;
+import com.example.demo.model.query.OperationQuery;
 import com.example.demo.model.view.FileView;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface BankAccountOperationService {
+public interface OperationService {
 
-    FileView exportToFile(BankAccountOperationsQuery query);
+    FileView exportToFile(OperationQuery query);
 
     void importFromFile(MultipartFile file);
 }

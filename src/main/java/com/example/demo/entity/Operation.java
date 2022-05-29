@@ -7,10 +7,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "bank_account_operations")
+@Table(name = "operations")
 @Setter
 @Getter
-public class BankAccountOperation {
+public class Operation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +29,7 @@ public class BankAccountOperation {
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "bank_account_id")
-    private BankAccount account;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
 }
