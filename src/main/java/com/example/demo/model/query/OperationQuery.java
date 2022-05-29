@@ -2,6 +2,7 @@ package com.example.demo.model.query;
 
 import lombok.Builder;
 import lombok.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +10,10 @@ import java.time.LocalDateTime;
 @Builder
 public class OperationQuery {
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     LocalDateTime from;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     LocalDateTime to;
 
 }
