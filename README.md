@@ -1,4 +1,4 @@
-# inventi-coding-challenge
+# Inventi Coding Challenge
 
 ### Installation
 
