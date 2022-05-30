@@ -10,7 +10,7 @@ import com.inventi.bankingapplication.repository.OperationRepository;
 import com.inventi.bankingapplication.repository.AccountRepository;
 import com.inventi.bankingapplication.service.OperationService;
 import com.inventi.bankingapplication.service.FileService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,12 +21,19 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class OperationServiceImpl implements OperationService {
 
     private final FileService fileService;
     private final OperationRepository operationRepository;
     private final AccountRepository accountRepository;
+
+    @Autowired
+    public OperationServiceImpl(FileService fileService, OperationRepository operationRepository,
+                                AccountRepository accountRepository) {
+        this.fileService = fileService;
+        this.operationRepository = operationRepository;
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public FileView exportToFile(OperationQuery query) {

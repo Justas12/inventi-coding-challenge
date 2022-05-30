@@ -2,11 +2,13 @@ package com.inventi.bankingapplication.model;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 public class CsvRecordBankStatement {
 
     @CsvBindByName(column = "ACCOUNT_NUMBER", required = true)
