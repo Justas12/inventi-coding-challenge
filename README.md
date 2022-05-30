@@ -1,5 +1,7 @@
 # Inventi Coding Challenge
 
+## Justas Janušis coding task for Inventi Java Developer position
+
 ### Installation
 
 ```sh
