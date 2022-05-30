@@ -15,3 +15,5 @@ $ ./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8080
 - GET /api/operations?from=to=
 - GET /api/balances?accountNumber=from=to=
 </pre>
+
+Sample .csv file can be found under /imports folder.
