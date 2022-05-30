@@ -14,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +34,17 @@ public class OperationServiceImpl implements OperationService {
             .stream()
             .map(this::buildOperationView)
             .collect(Collectors.toList());
-        return fileService.write(operations, "zaza");
+        return fileService.write(operations, getFileName());
+    }
+
+    private String getFileName() {
+        StringJoiner joiner = new StringJoiner("_");
+        LocalDateTime now = LocalDateTime.now();
+        return joiner
+            .add("Operations")
+            .add(LocalDate.now().toString())
+            .add(now.getHour() + ":" + now.getMinute() + ":" + now.getSecond())
+            .toString();
     }
 
     @Override
