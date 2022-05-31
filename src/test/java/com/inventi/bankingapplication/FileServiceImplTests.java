@@ -5,7 +5,6 @@ import com.inventi.bankingapplication.model.CsvRecordBankStatement;
 import com.inventi.bankingapplication.repository.AccountRepository;
 import com.inventi.bankingapplication.repository.OperationRepository;
 import com.inventi.bankingapplication.service.FileService;
-import com.inventi.bankingapplication.service.OperationService;
 import com.inventi.bankingapplication.service.impl.OperationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,36 +26,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-class OperationServiceImplTests {
+class FileServiceImplTests {
 
     @Autowired
     ResourceLoader resourceLoader;
 
     @Spy
-    private OperationRepository operationRepository;
-
-    @Spy
-    private AccountRepository accountRepository;
-
-    @Spy
     private FileService fileService;
 
-    @InjectMocks
-    private OperationServiceImpl operationService;
-
     @Test
-    void importFromFile() {
+    void readTest() {
         List<CsvRecordBankStatement> csvContent = new ArrayList<>();
         csvContent.add(CsvRecordBankStatement.builder().accountNumber("87234564").build());
         try {
             File file = resourceLoader.getResource("classpath:import/CSV_Data_2022_5_28 20_30_test.csv").getFile();
             byte[] content = Files.readAllBytes(file.toPath());
             MultipartFile result = new MockMultipartFile("test", content);
-            operationService.importFromFile(result);
-            List<Operation> databaseContent = operationRepository.findAll();
-            assertThat(csvContent.size()).isEqualTo(databaseContent.size());
+            List<CsvRecordBankStatement> contentAfterRead = fileService.read(result, CsvRecordBankStatement.class);
+            assertThat(csvContent.size()).isEqualTo(contentAfterRead.size());
             for (int i = 0; i < csvContent.size(); i++) {
-                assertThat(csvContent.get(i).getAccountNumber()).isEqualTo(databaseContent.get(i).getAccount().getNumber());
+                assertThat(csvContent.get(i).getAccountNumber()).isEqualTo(contentAfterRead.get(i).getAccountNumber());
             }
         } catch (Exception e) {
             e.printStackTrace();

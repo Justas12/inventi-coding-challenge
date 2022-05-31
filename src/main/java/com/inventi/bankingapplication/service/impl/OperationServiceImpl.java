@@ -23,11 +23,13 @@ import java.util.stream.Collectors;
 @Service
 public class OperationServiceImpl implements OperationService {
 
+    @Autowired
     private final FileService fileService;
+    @Autowired
     private final OperationRepository operationRepository;
+    @Autowired
     private final AccountRepository accountRepository;
 
-    @Autowired
     public OperationServiceImpl(FileService fileService, OperationRepository operationRepository,
                                 AccountRepository accountRepository) {
         this.fileService = fileService;
